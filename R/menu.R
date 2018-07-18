@@ -239,13 +239,13 @@ welcome.test <- function(e, ...){
 
 # Default version.
 #' @importFrom stringr str_detect str_trim
-welcome.default <- function(e, ...){ #"Welcome to swirl! Please sign in. If you've been here before, use the same name as you did then. If you are new, call yourself something unique."
-  swirl_out(s()%N%"شستيلنتاشس.", skip_after=TRUE)
-  resp <- readline(s()%N%"What shall I call you? ")
+welcome.default <- function(e, ...){ 
+  swirl_out(s()%N%"اهلا بك في سويل اذا سمحت استخدم نفس اسمك المستعار اذا كنت مستخدم هنا من قبل اما اذا كنت مستخدم جديد فختار لنفسك اسما فريدا", skip_after=TRUE)
+  resp <- readline(s()%N%"ماذا تريد ان اسميك ؟")
   while(str_detect(resp, '[[:punct:]]') || nchar(str_trim(resp)) < 1) {
-    swirl_out(s()%N%"Please don't use any quotes or other punctuation in your name.",
+    swirl_out(s()%N%"!!أ عند انشاء اسمك اذا سمحت لا تستخدم اي علامات ترقيم او اسماء مستخدمه مسبقا ",
               skip_after = TRUE)
-    resp <- readline(s()%N%"What shall I call you? ")
+    resp <- readline(s()%N%" ماذا تريد ان اسميك ؟")
   }
   return(resp)
 }
@@ -254,15 +254,16 @@ welcome.default <- function(e, ...){ #"Welcome to swirl! Please sign in. If you'
 # 
 # @param e persistent environment used here only for its class attribute
 # 
-housekeeping.default <- function(e){
-  swirl_out(paste0(s()%N%"Thanks, ", e$usr, s()%N%". Let's cover a couple of quick housekeeping items before we begin our first lesson. First of all, you should know that when you see '...', that means you should press Enter when you are done reading and ready to continue."))
-  readline(s()%N%"\n...  <-- That's your cue to press Enter to continue")
-  swirl_out(s()%N%"Also, when you see 'ANSWER:', the R prompt (>), or when you are asked to select from a list, that means it's your turn to enter a response, then press Enter to continue.")
-  select.list(c(s()%N%"Continue.", s()%N%"Proceed.", s()%N%"Let's get going!"),
-              title=s()%N%"\nSelect 1, 2, or 3 and press Enter", graphics=FALSE)
-  swirl_out(s()%N%"You can exit swirl and return to the R prompt (>) at any time by pressing the Esc key. If you are already at the prompt, type bye() to exit and save your progress. When you exit properly, you'll see a short message letting you know you've done so.")
+housekeeping.default <- function(e){#Let's cover a couple of quick housekeeping items before we begin our first lesson. First of all, you should know that when you see '...', that means you should press Enter when you are done reading and ready to continue.")
+  swirl_out(paste0(s()%N%"شكرا لك  ", e$usr, s()%N%".      نريد ان نراجع مراجعه سريعه لادوات المطبخ قبل ان نبدا في اول درس  اولا يجب ان تعلم ان النقاط تعني الضغط علي زر انتر  بعد الانتهاء من القراءه وتريد الاستمرار"))
+  readline(s()%N%"\n...  <-- هذه اشاره منك لاستمرار")
+ 
+  swirl_out(s()%N%"عندما تسأل لختار من القائمه فيتوجب عليك الاختار ثم الضغط على رز الانتر  حتي تستطيع الاستمرار")
+  select.list(c(s()%N%"الاستمرار", s()%N%"البرمجه.", s()%N%"لنستمر!"),
+              title=s()%N%"\n اختار ١او٢ او ٣ ثم اضغط الاستمرار", graphics=FALSE)
+  swirl_out(s()%N%"تستطيع الخروج من سويل بالضغط على زر الهروب او كتابه كلمه باي ثم سوف تشاهد رساله تخبرك بانك غادرت سويل")
   info()
-  swirl_out(s()%N%"Let's get started!", skip_before=FALSE)
+  swirl_out(s()%N%"هيا نبدا", skip_before=FALSE)
   readline("\n...")
 }
 
@@ -270,8 +271,8 @@ housekeeping.test <- function(e){}
 
 # A stub. Eventually this should be a full menu
 inProgressMenu.default <- function(e, choices){
-  nada <- s()%N%"No. Let me start something new."
-  swirl_out(s()%N%"Would you like to continue with one of these lessons?")
+  nada <- s()%N%"لا.اريد ان ابدا في شي جديد"
+  swirl_out(s()%N%"هل ترغب في ان تبدا في احد هذه الدروس؟")
   selection <- select.list(c(choices, nada), graphics=FALSE)
   # return a blank if the user rejects all choices
   if(identical(selection, nada))selection <- ""
@@ -286,7 +287,7 @@ inProgressMenu.test <- function(e, choices) {
 courseMenu.default <- function(e, choices){
   repo_option <- s()%N%"Take me to the swirl course repository!"
   choices <- c(choices, repo = repo_option)
-  swirl_out(s()%N%"Please choose a course, or type 0 to exit swirl.")
+  swirl_out(s()%N%"اذا سمحت اختار الكورس او اضغط على صفر حتى تغادر سويل")
   return(select.list(choices, graphics=FALSE))
 }
 
@@ -296,7 +297,7 @@ courseMenu.test <- function(e, choices) {
 
 # A stub. Eventually this should be a full menu
 lessonMenu.default <- function(e, choices){
-  swirl_out(s()%N%"Please choose a lesson, or type 0 to return to course menu.")
+  swirl_out(s()%N%"اذا سمحت اختار الدرس او اضغط صفر حتى تغادر قائمه الدورات")
   return(select.list(choices, graphics=FALSE))
 }
 
