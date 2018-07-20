@@ -3,7 +3,7 @@ praise <- function() {
   swirl_is_fun <- getOption("swirl_is_fun")
   
   if(is.null(swirl_is_fun) || isTRUE(swirl_is_fun)) {
-    phrases <- c(s()%N%"You got it!",
+    phrases <- c(s()%N%"اجابه صحيحه ممتاز",
                  s()%N%"Nice work!",
                  s()%N%"Keep up the great work!",
                  s()%N%"You are doing so well!",
