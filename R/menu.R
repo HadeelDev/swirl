@@ -241,7 +241,7 @@ welcome.test <- function(e, ...){
 #' @importFrom stringr str_detect str_trim
 welcome.default <- function(e, ...){ 
   swirl_out(s()%N%"اهلا بك في سويل اذا سمحت استخدم نفس اسمك المستعار اذا كنت مستخدم هنا من قبل اما اذا كنت مستخدم جديد فختار لنفسك اسما فريدا", skip_after=TRUE)
-  resp <- readline(s()%N%"ماذا تريد ان اسميك ؟")
+  resp <- readline(s()%N%"(>>) اكتب اسمك على الجهه اليمنى بعد اشاره |>> ")
   while(str_detect(resp, '[[:punct:]]') || nchar(str_trim(resp)) < 1) {
     swirl_out(s()%N%"!!أ عند انشاء اسمك اذا سمحت لا تستخدم اي علامات ترقيم او اسماء مستخدمه مسبقا ",
               skip_after = TRUE)
@@ -255,7 +255,7 @@ welcome.default <- function(e, ...){
 # @param e persistent environment used here only for its class attribute
 # 
 housekeeping.default <- function(e){
-  swirl_out(paste0(s()%N%"شكرا لك  ", e$usr, s()%N%".  نريد ان نراجع مراجعه سريعه لادوات المطبخ قبل ان نبدا في اول درس  اولا يجب ان تعلم ان النقاط تعني الضغط علي زر انتر  بعد الانتهاء من القراءه وتريد الاستمرار"))
+  swirl_out(paste0(s()%N%"شكرا لك  ", e$usr, s()%N%". احضر قهوتك المفضله حتى نستعد سويا لدرس ،الان سوف ننتبه لكل اشاره صغيره ،اذا كنت تريد الاستمرار اضغط على زر المتابعه"))
   readline(s()%N%"\n...  <-- هذه اشاره منك لاستمرار")
  
   swirl_out(s()%N%"عندما تسأل لختار من القائمه فيتوجب عليك الاختار ثم الضغط على رز الانتر  حتي تستطيع الاستمرار")
@@ -266,6 +266,7 @@ housekeeping.default <- function(e){
   swirl_out(s()%N%"هيا نبدا", skip_before=FALSE)
   readline("\n...")
 }
+
 
 housekeeping.test <- function(e){}
 
