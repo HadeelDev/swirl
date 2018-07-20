@@ -188,7 +188,7 @@ omnitest <- function(correctExpr=NULL, correctVal=NULL, strict=FALSE, eval_for_c
       good_expr <- parse(text=correctExpr)[[1]]
       ans <- is_robust_match(good_expr, e$expr, eval_for_class, eval_env)
     }, silent=TRUE)
-    if (is(err, "try-error")) {
+    if (is(err, "حاول، خطأ")) {
       return(expr_identical_to(correctExpr))
     } else {
       return(ans)
@@ -221,13 +221,13 @@ omnitest <- function(correctExpr=NULL, correctVal=NULL, strict=FALSE, eval_for_c
       good_expr <- parse(text=correctExpr)[[1]]
       ans <- is_robust_match(good_expr, e$expr, eval_for_class, eval_env)
     }, silent=TRUE)
-    exprGood <- ifelse(is(err, "try-error"), expr_identical_to(correctExpr), ans)
+    exprGood <- ifelse(is(err, "حاول،خطأ"), expr_identical_to(correctExpr), ans)
   }
   if((isTRUE(valGood) || is.na(valGood)) && exprGood){
     return(TRUE)
   } else if (isTRUE(valGood) && !exprGood && !strict){
-      swirl_out(s()%N%"That's not the expression I expected but it works.")
-      swirl_out(s()%N%"I've executed the correct expression in case the result is needed in an upcoming question.")
+      swirl_out(s()%N%"هذا ليس التعبير الذي كنت متوقعه ولكنه يعمل")
+      swirl_out(s()%N%"انا اكملت التعبير الصحيح للاحتياط لاننا ممكن نحتاجه في الاسئله القادمه ")
       eval(parse(text=correctExpr),globalenv())
       return(TRUE)
     } else {
@@ -352,7 +352,7 @@ var_is_a <- function(class, var_name) {
     if(is(e,"dev") && !results$passed)swirl_out(results$message)
     return(results$passed)
   } else {
-    if(is(e,"dev"))swirl_out(paste(var_name, "does not exist."))
+    if(is(e,"dev"))swirl_out(paste(var_name, "غير موجود"))
     return(FALSE)
   }
 }
@@ -432,12 +432,12 @@ expr_creates_var <- function(correctName=NULL){
   if(is.null(correctName)){
     results <- expectThat(length(delta), equals_legacy(1), 
                           label=paste(deparse(e$expr), 
-                                      "does not create a variable."))  
+                                      "لا ينشأ متغير"))  
   } else {
     results <- expectThat(names(delta), 
                           is_equivalent_to_legacy(correctName, label=correctName), 
                           label=paste(deparse(e$expr),
-                                      "does not create a variable named",
+                                      "لا ينشأ اسم متغير",
                                       correctName))
   }
   if(results$passed){
@@ -467,8 +467,8 @@ val_has_length <- function(len){
   e <- get("e", parent.frame())
   try(n <- as.integer(len), silent=TRUE)
   if(is.na(n)){
-    stop(message=paste("BUG: specified length", len,
-                                 "is not an integer."))
+    stop(message=paste("BUG: حدد الطول", len,
+                                 "ليس عدد صحيحا"))
   }
   results <- expectThat(length(e$val), equals_legacy(n, label=n), 
                         label=paste0("length(c(", toString(e$val), "))"))                                                   
