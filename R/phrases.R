@@ -35,22 +35,22 @@ tryAgain <- function() {
   swirl_is_fun <- getOption("swirl_is_fun")
   
   if(is.null(swirl_is_fun) || isTRUE(swirl_is_fun)) {
-    phrases <- c(s()%N%"Almost! Try again.",
-                 s()%N%"You almost had it, but not quite. Try again.",
-                 s()%N%"Give it another try.",
-                 s()%N%"Not quite! Try again.",
-                 s()%N%"Not exactly. Give it another go.",
-                 s()%N%"That's not exactly what I'm looking for. Try again.",
-                 s()%N%"Nice try, but that's not exactly what I was hoping for. Try again.",
-                 s()%N%"Keep trying!",
-                 s()%N%"That's not the answer I was looking for, but try again.",
-                 s()%N%"Not quite right, but keep trying.",
-                 s()%N%"You're close...I can feel it! Try it again.",
-                 s()%N%"One more time. You can do it!",
-                 s()%N%"Not quite, but you're learning! Try again.",
-                 s()%N%"Try again. Getting it right on the first try is boring anyway!")
+    phrases <- c(s()%N%"تقريبا ولكن حاول مره اخرى",
+                 s()%N%"اقتربت من الاجابه ،حاول مره اخرى",
+                 s()%N%"صديقي حاول مره اخرى",
+                 s()%N%"حاول مره اخرى يابطل",
+                 s()%N%"صديقي حاول مره اخرى",
+                 s()%N%"ليست الاجابه التي ابحث عنها حاول مره اخرى",
+                 s()%N%"محاوله جميله ، ولكن ليست صحيحه ،حاول مره اخرى",
+                 s()%N%"استمر في المحاوله",
+                 s()%N%"صديقي حاول مره ثانيه",
+                 s()%N%"اقتربت من الاجابه ،استمر في المحاوله",
+                 s()%N%"انا اشعر بانك تقترب من الاجابه الصحيحه استمر في المحاوله ياعزيزي",
+                 s()%N%"حاول مره ثانيه يا اذكى طالب",
+                 s()%N%"ليست اجابه صحيحه ولكن استمر  وفقك الله",
+                 s()%N%"حاول مره اخرى ، جدا مزعج الحصول على الاجابه الصحيحه من اول محاوله")
   } else {
-    phrases <- s()%N%"Incorrect. Please try again."
+    phrases <- s()%N%"غير صحيحه ولكن حاول سوف تصل الى الاجابه قريبا "
   }
   sample(phrases, 1)
 }
