@@ -254,13 +254,13 @@ welcome.default <- function(e, ...){
 # 
 # @param e persistent environment used here only for its class attribute
 # 
-housekeeping.default <- function(e){#Let's cover a couple of quick housekeeping items before we begin our first lesson. First of all, you should know that when you see '...', that means you should press Enter when you are done reading and ready to continue.")
-  swirl_out(paste0(s()%N%"شكرا لك  ", e$usr, s()%N%".      نريد ان نراجع مراجعه سريعه لادوات المطبخ قبل ان نبدا في اول درس  اولا يجب ان تعلم ان النقاط تعني الضغط علي زر انتر  بعد الانتهاء من القراءه وتريد الاستمرار"))
+housekeeping.default <- function(e){
+  swirl_out(paste0(s()%N%"شكرا لك  ", e$usr, s()%N%".  نريد ان نراجع مراجعه سريعه لادوات المطبخ قبل ان نبدا في اول درس  اولا يجب ان تعلم ان النقاط تعني الضغط علي زر انتر  بعد الانتهاء من القراءه وتريد الاستمرار"))
   readline(s()%N%"\n...  <-- هذه اشاره منك لاستمرار")
  
   swirl_out(s()%N%"عندما تسأل لختار من القائمه فيتوجب عليك الاختار ثم الضغط على رز الانتر  حتي تستطيع الاستمرار")
   select.list(c(s()%N%"الاستمرار", s()%N%"البرمجه.", s()%N%"لنستمر!"),
-              title=s()%N%"\n اختار ١او٢ او ٣ ثم اضغط الاستمرار", graphics=FALSE)
+              title=s()%N%"\n Select 1, 2, or 3 and press Enter", graphics=FALSE)
   swirl_out(s()%N%"تستطيع الخروج من سويل بالضغط على زر الهروب او كتابه كلمه باي ثم سوف تشاهد رساله تخبرك بانك غادرت سويل")
   info()
   swirl_out(s()%N%"هيا نبدا", skip_before=FALSE)
@@ -285,9 +285,9 @@ inProgressMenu.test <- function(e, choices) {
 
 # A stub. Eventually this should be a full menu
 courseMenu.default <- function(e, choices){
-  repo_option <- s()%N%"Take me to the swirl course repository!"
+  repo_option <- s()%N%"خذني الى قائمه كورس سويل"
   choices <- c(choices, repo = repo_option)
-  swirl_out(s()%N%"اذا سمحت اختار الكورس او اضغط على صفر حتى تغادر سويل")
+  swirl_out(s()%N%"Please choose a course, or type 0 to exit swirl.")
   return(select.list(choices, graphics=FALSE))
 }
 
