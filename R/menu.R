@@ -283,7 +283,7 @@ inProgressMenu.test <- function(e, choices) {
   ""
 }
 
-# A stub. Eventually this should be a full menu
+# A stub. Eventually this should be a full menu 
 courseMenu.default <- function(e, choices){
   repo_option <- s()%N%"خذني الى قائمه كورس سويل"
   choices <- c(choices, repo = repo_option)
