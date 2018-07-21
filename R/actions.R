@@ -35,7 +35,7 @@ do_submit.default <- function(e) {
 }
 
 do_play.default <- function(e) {
-  swirl_out(s()%N%"الان سوف ندخل ساحه اللعب ، اضغط على زر المتابعه اذا كنت مستعدا لاستذناف الدرس", skip_after=TRUE)
+  swirl_out(s()%N%"الان سوف ندخل ساحه اللعب، انقر على زر المتابعه اذا كنت مستعدا لاستئناف الدرس", skip_after=TRUE)
   e$playing <- TRUE
 }
 
