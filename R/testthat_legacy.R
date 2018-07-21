@@ -5,7 +5,7 @@
 # old version works for our purposes.
 
 expectation_legacy <- function(passed, failure_msg, 
-                            success_msg = "unknown", 
+                            success_msg = "غير معرف", 
                             srcref = NULL) {
   structure(
     list(
@@ -16,14 +16,14 @@ expectation_legacy <- function(passed, failure_msg,
       success_msg = success_msg,
       srcref = srcref
     ),
-    class = "expectation"
+    class = "متوقع"
   )
 }
 
 #' @importFrom testthat compare
 equals_legacy <- function(expected, label = NULL, ...) {
   if (is.null(label)) {
-    label <- findExpr("expected")
+    label <- findExpr("متوقع")
   } else if (!is.character(label) || length(label) != 1) {
     label <- deparse(label)
   }
@@ -33,8 +33,8 @@ equals_legacy <- function(expected, label = NULL, ...) {
     
     expectation_legacy(
       same$equal,
-      paste0("not equal to ", label, "\n", same$message),
-      paste0("equals ", label)
+      paste0("ليس مساوي ", label, "\n", same$message),
+      paste0("مساوي ", label)
     )
   }
 }
@@ -45,15 +45,15 @@ is_a_legacy <- function(class) {
     class_s <- paste(class, collapse = ", ")
     expectation_legacy(
       inherits(x, class),
-      paste0("inherits from ", actual_s, " not ", class_s),
-      paste0("inherits from ", class_s)
+      paste0("يؤخذ من ", actual_s, " لا ", class_s),
+      paste0("يؤخذ من  ", class_s)
     )
   }
 }
 
 is_equivalent_to_legacy <- function(expected, label = NULL) {
   if (is.null(label)) {
-    label <- findExpr("expected")
+    label <- findExpr("لا")
   } else if (!is.character(label) || length(label) != 1) {
     label <- deparse(label)
   }
@@ -64,7 +64,7 @@ is_equivalent_to_legacy <- function(expected, label = NULL) {
 
 is_identical_to_legacy <- function(expected, label = NULL) {
   if (is.null(label)) {
-    label <- findExpr("expected")
+    label <- findExpr("توقع")
   } else if (!is.character(label) || length(label) != 1) {
     label <- deparse(label)
   }
@@ -83,8 +83,8 @@ is_identical_to_legacy <- function(expected, label = NULL) {
     
     expectation_legacy(
       identical(actual, expected),
-      paste0("is not identical to ", label, ". Differences: \n", diff),
-      paste0("is identical to ", label)
+      paste0("غير متطابق ل ", label, ": مختلف \n", diff),
+      paste0("متطابق ل ", label)
     )
   }
 }
@@ -94,16 +94,16 @@ matches_legacy <- function(regexp, all = TRUE, ...) {
   function(char) {
     matches <- grepl(regexp, char, ...)
     if (length(char) > 1) {
-      values <- paste0("Actual values:\n",
+      values <- paste0(":القيمه الاصليه\n",
                        paste0("* ", encodeString(char), collapse = "\n"))
     } else {
-      values <- paste0("Actual value: \"", encodeString(char), "\"")
+      values <- paste0(":القيمه الاصليه \"", encodeString(char), "\"")
     }
     
     expectation_legacy(
       length(matches) > 0 && if (all) all(matches) else any(matches),
-      paste0("does not match '", encodeString(regexp), "'. ", values),
-      paste0("matches '", encodeString(regexp), "'")
+      paste0("غير متطابق'", encodeString(regexp), "'. ", values),
+      paste0("متطابق'", encodeString(regexp), "'")
     )
   }
 }
