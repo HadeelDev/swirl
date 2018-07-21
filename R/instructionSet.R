@@ -27,25 +27,25 @@ waitUser.default <- function(current.row, e){
 }
 
 waitUser.text_question <- function(current.row, e){
-  e$val <- str_trim(unlist(strsplit(readline("ANSWER: "),",")))
+  e$val <- str_trim(unlist(strsplit(readline(":الاجابه "),",")))
   e$iptr <- 1 + e$iptr
 }
 
 waitUser.text_many_question <- function(current.row, e){
-  e$val <- str_trim(unlist(strsplit(readline("ANSWER: "),",")))
+  e$val <- str_trim(unlist(strsplit(readline(":الاجابه "),",")))
   e$iptr <- 1 + e$iptr
 }
 
 waitUser.text_order_question <- function(current.row, e){
-  e$val <- str_trim(unlist(strsplit(readline("ANSWER: "),",")))
+  e$val <- str_trim(unlist(strsplit(readline(":الاجابه "),",")))
   e$iptr <- 1 + e$iptr
 }
 
 
 waitUser.video <- function(current.row, e){
-  response <- readline("Yes or No? ")
-  if(tolower(response) %in% c("y", "yes")){
-    swirl_out(s()%N%"Type nxt() to continue")
+  response <- readline("نعم او لا ؟ ")
+  if(tolower(response) %in% c("نعم", "ن")){
+    swirl_out(s()%N%"للمتابعه nxt() اضغط على")
     e$prompt <- TRUE
     e$playing <- TRUE
     browseURL(current.row[,"VideoLink"])
@@ -164,7 +164,7 @@ testResponse.default <- function(current.row, e){
   if(is.na(tests) || tests == ""){
     results <- is(e, "dev")
     if(!results){
-      stop(s()%N%"BUG: There are no tests for this question!")
+      stop(s()%N%"BUG: لا يوجد اختبار لهذا السؤال")
     }
   } else {
     tests <- str_trim(unlist(strsplit(tests,";")))
@@ -195,7 +195,7 @@ testResponse.default <- function(current.row, e){
     if(length(e$snapshot)>0)xfer(as.environment(e$snapshot), globalenv())
     mes <- tryAgain()
     if(is(current.row, "cmd_question") && !is(e, "datacamp")) {
-      mes <- paste(mes, s()%N%"Or, type info() for more options.")
+      mes <- paste(mes, s()%N%"لمزيد من الخيارات info() او اكتب")
     }
     hint <- current.row[,"Hint"]
     post_result(e, passed = correct, feedback = mes, hint = if(is.na(hint)) NULL else hint)
@@ -207,9 +207,9 @@ testResponse.default <- function(current.row, e){
 
 testMe <- function(keyphrase, e){
   # patch to accommodate old-style tests
-  oldcourse <- attr(e$les, "course_name") %in%
-    c("Data Analysis", "Mathematical Biostatistics Boot Camp",
-      "Open Intro")
+  oldcourse <- attr(e$les, "اسم الدوره") %in%
+    c("تحليل الرياضي", "التحليل الرياضي الاحصائي",
+      "فتح المقدمه")
 
   if(oldcourse){
     # Use old test syntax
