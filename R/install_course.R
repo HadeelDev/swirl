@@ -61,7 +61,7 @@ install_course <- function(course_name = NULL, swc_path = NULL, force = FALSE){
   } 
   
   if(!is.null(course_name) && !is.null(swc_path)){
-    stop(s()%N%"Please specify a value for either course_name or swc_path but not both.")
+    stop(s()%N%"ولكن ليس كلاهما course_name او swc_path اذا سمحت حدد قيمه ")
   } else if(!is.null(swc_path)){
     unpack_course(swc_path, swirl_courses_dir())
   } else { # install from swirl course network
@@ -72,10 +72,10 @@ install_course <- function(course_name = NULL, swc_path = NULL, force = FALSE){
     response <- suppressWarnings(GET(url, progress()))
     
     if(response$status_code != 200){
-      swirl_out(s()%N%"It looks like your internet connection is not working.",
-                s()%N%"Go to http://swirlstats.com/scn/ and download the .swc file that corresponds to the course you wish to install.",
-                s()%N%"After downloading the .swc run install_course() and choose the file you downloaded.")
-      stop(s()%N%"Could not connect to course file.")
+      swirl_out(s()%N%"يبدو ان هناك مشكله في اتصال الانترنت ، الشبكه لا تعمل",
+                s()%N%"الذي يتوافق مع الدوره التدريبيه التي ترغب في تثبيتها swc  وقم بانزال ملف http://swirlstats.com/scn/ اذهب الى",
+                s()%N%" ثم اختار الملف الذي تود تنزيله install_course() قم بتشغيل swc بعد تنزيل ")
+      stop(s()%N%"Cقد لا يمكن الاتصال بملف الدوره التدريبيه")
     }
     
     temp_swc <- tempfile()
@@ -130,10 +130,10 @@ install_from_swirl <- function(course_name, dev = FALSE, mirror = "github"){
     stop(s()%N%"Argument 'course_name' must be surrounded by quotes (i.e. a character string)!")
   }
   if(!is.logical(dev)) {
-    stop(s()%N%"Argument 'dev' must be either TRUE or FALSE!")
+    stop(s()%N%"  TRUE او FALSE لابد ان تكون 'dev' الحجه")
   }
   if(!(mirror == "github" || mirror == "bitbucket")){
-    stop(s()%N%"Please enter a valid name for a mirror. ('github' or 'bitbucket')")
+    stop(s()%N%" ('github' او 'bitbucket') اذا سمحت ادخل اسم صالح للواجهه")
   }
     
   # make pathname from course_name
@@ -240,7 +240,7 @@ zip_course <- function(path, dest=NULL){
   if(file.copy(path, zip_dir, recursive=TRUE)){
     swirl_out("Course directory was successfully zipped!", skip_after=TRUE)
   } else {
-    swirl_out("Course installation failed.", skip_after=TRUE)
+    swirl_out("فشل تنزيل الدوره", skip_after=TRUE)
   }
   
   # Change directory to folder to be zipped
@@ -273,9 +273,9 @@ uninstall_course <- function(course_name){
   path <- file.path(swirl_courses_dir(), make_pathname(course_name))
   if(file.exists(path)){
     unlink(path, recursive=TRUE, force=TRUE)
-    message(s()%N%"Course uninstalled successfully!")
+    message(s()%N%"الدوره حذفت بشكل ناجح")
   } else {
-    stop(s()%N%"Course not found!")
+    stop(s()%N%"الدوره غير موجوده")
   }
   invisible()
 }
@@ -301,22 +301,22 @@ uninstall_all_courses <- function(force = FALSE){
   }
   if(file.exists(path)){
     if(!force){
-      swirl_out(s()%N%"Are you sure you want to uninstall all swirl courses?",
-                s()%N%"This will delete all of the contents of your swirl course directory.")
-      selection <- select.list(c(s()%N%"Yes", s()%N%"No"))
+      swirl_out(s()%N%" swirl هل انت متأكد انك ترغب في حذف جميع دورات ",
+                s()%N%"بشكل مباشر swirl هذا سوف يحذف جميع المرفقات الخاصه بك على دوره ")
+      selection <- select.list(c(s()%N%"نعم", s()%N%"لا"))
       if(selection == s()%N%"Yes"){
         unlink(path, recursive=TRUE, force=TRUE)
-        message(s()%N%"All courses uninstalled successfully!")
+        message(s()%N%"كل الدورات حذفت بشكل ناجح")
       } else {
-        message("No courses were uninstalled.")
+        message("لا يوجد دورات تم تنزيلها")
         return()
       }
     } else {
       unlink(path, recursive=TRUE, force=TRUE)
-      message(s()%N%"All courses uninstalled successfully!")
+      message(s()%N%"كل الدورات حذفت بشكل ناجح")
     }
   } else {
-    stop(s()%N%"No courses found!")
+    stop(s()%N%"لا يوجد دورات ")
   }
   
   dir.create(path, showWarnings = FALSE)
@@ -346,10 +346,10 @@ uninstall_all_courses <- function(force = FALSE){
 #' @family InstallCourses
 install_course_zip <- function(path, multi=FALSE, which_course=NULL){
   if(!is.logical(multi) || is.na(multi)) {
-    stop(s()%N%"Argument 'multi' must be either TRUE or FALSE.")
+    stop(s()%N%"  TRUE او FALSE يجب ان تكون 'multi' الحجه")
   }
   if(!multi && !is.null(which_course)) {
-    stop(s()%N%"Argument 'which_course' should only be specified when argument 'multi' is TRUE.")
+    stop(s()%N%"TRUE تكون 'multi' يجب ان تكون محددهعندما الحجه  'which_course'الحجه")
   }
   if(multi){
     # Find list of files not in top level directory
@@ -373,9 +373,9 @@ install_course_zip <- function(path, multi=FALSE, which_course=NULL){
       dirs_to_copy <- dirs_to_copy[match_ind]
     }
     if(file.copy(dirs_to_copy, swirl_courses_dir(), recursive=TRUE)){
-      swirl_out(s()%N%"Course installed successfully!", skip_after=TRUE)
+      swirl_out(s()%N%"تم تنزيل الدوره بنجاح", skip_after=TRUE)
     } else {
-      swirl_out(s()%N%"Course installation failed.", skip_after=TRUE)
+      swirl_out(s()%N%"فشل في تنزيل الدوره", skip_after=TRUE)
     }
     
     # Delete unzipped directory
@@ -411,14 +411,14 @@ install_course_directory <- function(path){
   
   # Check to make sure there are fewer than 1000 files in course directory
   if(length(garbage_result) > 1000){
-    stop(s()%N%"Course directory is too large to install")
+    stop(s()%N%"دليل الدوره التدريبيه كبير جدا ولا يمكن تثبيته")
   }
   
   # Copy files
   if(file.copy(path, swirl_courses_dir(), recursive=TRUE)){
-    swirl_out(s()%N%"Course installed successfully!", skip_after=TRUE)
+    swirl_out(s()%N%"تم تنزيل الدوره بنجاح", skip_after=TRUE)
   } else {
-    swirl_out(s()%N%"Course installation failed.", skip_after=TRUE)
+    swirl_out(s()%N%"فشل تنزيل الدوره", skip_after=TRUE)
   }
   
   invisible()
@@ -565,6 +565,6 @@ unpack_course <- function(file_path, export_path, force = FALSE){
     
     writeBin(pack$files[[i]]$raw_file, file_path, endian = pack$files[[i]]$endian)
   }
-  swirl_out(s()%N%"Course installed successfully!", skip_after=TRUE)
+  swirl_out(s()%N%"تم تنزيل الدوره بنجاح", skip_after=TRUE)
   invisible(course_path)
 }

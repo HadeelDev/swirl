@@ -42,7 +42,7 @@ email <- function(address, subject, body) {
   tryCatch({
     browseURL(url, browser = email_browser())},
     error = function(e) {
-      message("Sending failed with error: ", e$message)
+      message("ارسال مع الخطأ", e$message)
       cat("To: ", address, "\n", sep = "")
       cat("Subject: ", subject, "\n", sep = "")
       cat("\n")
