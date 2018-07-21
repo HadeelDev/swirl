@@ -61,22 +61,22 @@ mainMenu.default <- function(e){
       if(length(coursesU)==0){
         suggestions <- yaml.load_file(file.path(find.package("swirl"), "Courses", "suggested_courses.yaml"))
         choices <- sapply(suggestions, function(x)paste0(x$Course, ": ", x$Description))
-        swirl_out(s()%N%"To begin, you must install a course. I can install a course for you from the internet, or I can send you to a web page (https://github.com/swirldev/swirl_courses) which will provide course options and directions for installing courses yourself. (If you are not connected to the internet, type 0 to exit.)")
-        choices <- c(choices, s()%N%"Don't install anything for me. I'll do it myself.")
+swirl_out(s()%N%" الذي يوفر لك جميع الدورات المناسبه مع مواقع التنزيل اذا كنت غير متصل بالانترنت اضغط صفر للخروج (https://github.com/swirldev/swirl_courses) للبدأ،يجب عليك ان تقم بتنزيل الدوره ، انا استطيع تنزيل الدوره لك من الانترنت او استطيع ان ارسل لك صفحه على الانترنت )")
+        choices <- c(choices, s()%N%"لا تقم بأي تنزيل سوف اقم بذلك بنفسي")
         choice <- select.list(choices, graphics=FALSE)
         n <- which(choice == choices)
         if(length(n) == 0)return(FALSE)
         if(n < length(choices)){
           repeat {
             temp <- try(eval(parse(text=suggestions[[n]]$Install)), silent=TRUE)
-            if(is(temp, "try-error")){
-              swirl_out(s()%N%"Sorry, but I'm unable to fetch ", sQuote(choice),
-                        s()%N%"right now. Are you sure you have an internet connection?",
-                        s()%N%"If so, would you like to try again or visit",
+            if(is(temp, "حاول ،خطأ")){
+              swirl_out(s()%N%"اسف ولكنني لست قادرا على الجلب ", sQuote(choice),
+                        s()%N%"الان،هل انت متأكد انك متصل بالانترنت",
+                        s()%N%"اذا كانت اجابتك بنعم، هل ترغب بالمحاوله مره اخرى؟",
                         s()%N%"the course repository for instructions on how to",
                         s()%N%"install a course manually? Type 0 to exit.")
-              ch <- c(s()%N%"Try again!", 
-                      s()%N%"Send me to the course repository for manual installation.")
+              ch <- c(s()%N%"حاول مره اخرى", 
+                      s()%N%"ارسل لي اسم مكان الدوره حتى نتمكن من التنزيل اليدوي")
               resp <- select.list(ch, graphics=FALSE)
               if(resp == "") return(FALSE)
               if(resp == ch[2]) {
@@ -286,9 +286,9 @@ inProgressMenu.test <- function(e, choices) {
 
 # A stub. Eventually this should be a full menu 
 courseMenu.default <- function(e, choices){
-  repo_option <- s()%N%"خذني الى قائمه كورس سويل"
+  repo_option <- s()%N%"swirlخذني الي قائمه دورات "
   choices <- c(choices, repo = repo_option)
-  swirl_out(s()%N%"Please choose a course, or type 0 to exit swirl.")
+  swirl_out(s()%N%"swirl اذا سمحت اختار الدوره المناسبه او اضغط على صفر للخروج من")
   return(select.list(choices, graphics=FALSE))
 }
 
