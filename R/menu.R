@@ -73,8 +73,8 @@ swirl_out(s()%N%" الذي يوفر لك جميع الدورات المناسب�
               swirl_out(s()%N%"اسف ولكنني لست قادرا على الجلب ", sQuote(choice),
                         s()%N%"الان،هل انت متأكد انك متصل بالانترنت",
                         s()%N%"اذا كانت اجابتك بنعم، هل ترغب بالمحاوله مره اخرى؟",
-                        s()%N%"the course repository for instructions on how to",
-                        s()%N%"install a course manually? Type 0 to exit.")
+                        s()%N%"للحصول علي مزيد من الارشادات في كيفيه تثبيت الدوره التدريبيه ",
+                        s()%N%"قم بزياره مستودع الدوره التدريبيه او صفر للخروج ")
               ch <- c(s()%N%"حاول مره اخرى", 
                       s()%N%"ارسل لي اسم مكان الدوره حتى نتمكن من التنزيل اليدوي")
               resp <- select.list(ch, graphics=FALSE)
@@ -102,7 +102,7 @@ swirl_out(s()%N%" الذي يوفر لك جميع الدورات المناسب�
                                function(x)length(dir(file.path(courseDir(e),x)))>0))
           coursesU <- coursesU[idx]
         } else {
-          swirl_out(s()%N%"OK. I'm opening the swirl course respository in your browser.")
+          swirl_out(s()%N%"في المتصفح الخاص بك swirl ممتاز. انا افتح دوره")
           browseURL("https://github.com/swirldev/swirl_courses")
           return(FALSE)
         }
@@ -113,7 +113,7 @@ swirl_out(s()%N%" الذي يوفر لك جميع الدورات المناسب�
       while(lesson == ""){
         course <- courseMenu(e, coursesR)
         if(!is.null(names(course)) && names(course)=="repo") {
-          swirl_out(s()%N%"OK. I'm opening the swirl courses web page in your browser.")
+          swirl_out(s()%N%"علي المتصفح الخاص بك swirl ممتاز.انا افتح صفحه الانترنت الخاصه بدورات")
           browseURL("https://github.com/swirldev/swirl_courses")
           return(FALSE)
         }
