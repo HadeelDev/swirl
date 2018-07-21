@@ -260,8 +260,8 @@ housekeeping.default <- function(e){
  
   swirl_out(s()%N%"عندما تسأل لختار من القائمه فيتوجب عليك الاختار ثم الضغط على رز الانتر  حتي تستطيع الاستمرار")
   select.list(c(s()%N%"الاستمرار", s()%N%"البرمجه.", s()%N%"لنستمر!"),
-              title=s()%N%"\n Select 1, 2, or 3 and press Enter", graphics=FALSE)
-  swirl_out(s()%N%"تستطيع الخروج من سويل بالضغط على زر الهروب او كتابه كلمه باي ثم سوف تشاهد رساله تخبرك بانك غادرت سويل")
+              title=s()%N%"\n  اختار احد هذه الارقام1  2  3  ثم اضغط زر المتابعه ", graphics=FALSE)
+  swirl_out(s()%N%"  swirl ثم سوف تشاهد رساله سوف تخبرك بأنك غادرت  bye بالضغط على زر الهروباو كتابه كلمه  swirl تستطيع الخروج من ")
   info()
   swirl_out(s()%N%"هيا نبدا", skip_before=FALSE)
   readline("\n...")
