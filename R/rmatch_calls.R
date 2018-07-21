@@ -95,9 +95,9 @@ rmatch_calls <- function(expr, eval_for_class=FALSE, eval_env=NULL){
     # If the S3 method's first argument, expr[[2]], is anything but atomic 
     # its class can't be determined here without evaluation.
     if(!is.atomic(expr[[2]]) & !eval_for_class){
-      stop(paste0("Illegal expression, ", dprs(expr),": The first argument, ", dprs(expr[[2]]), 
-                  ", to S3 method '", dprs(expr[[1]]), 
-                  "', is a ", class(expr[[2]]) , ", which (as an expression) is not atomic,",
+      stop(paste0("عباره غير قانونيه, ", dprs(expr),": اول حجه, ", dprs(expr[[2]]), 
+                  ",  S3 لنظام '", dprs(expr[[1]]), 
+                  "', a هو", class(expr[[2]]) , ", العباره ليست اتوماتك,",
                   " hence its class can't be determined in an abstract",
                   " syntax tree without additional information.\n"))
     }
@@ -111,21 +111,21 @@ rmatch_calls <- function(expr, eval_for_class=FALSE, eval_env=NULL){
     classes <- try(class(temp), silent=TRUE)
     for(cls in classes){
       err <- try(fct <- getS3method(as.character(expr[[1]]), cls), silent=TRUE)
-      if(!is(err, "try-error"))break
+      if(!is(err, "حاول خطأ"))break
     }
     # If there was no matching method, attempt to find the default method. If that fails,
     # raise an error
     if(is(err, "try-error")){
       tryCatch(fct <- getS3method(as.character(expr[[1]]), "default"),
-               error = function(e)stop(paste0("Illegal expression ", dprs(expr), ": ",
-                                              "There is no matching S3 method or default for object, ",
+               error = function(e)stop(paste0("عباره غير قانونيه ", dprs(expr), ": ",
+                                              " ,S3 غير متطابق ",
                                               dprs(expr[[2]]), ", of class, ", cls,".\n")))
     }
   }
   # Form preliminary match. If match.call raises an error here, the remaining code is
   # likely to give a misleading result. Catch the error merely to give a better diagnostic.
   tryCatch(expr <- match.call(fct, expr),
-           error = function(e)stop(paste0("Illegal expression ", dprs(expr), ": ", 
+           error = function(e)stop(paste0("عباره غير قانونيه ", dprs(expr), ": ", 
                                           dprs(expr[[1]]), " is not a function.\n")))
   # Append named formals with default values which are not included
   # in the preliminary match
