@@ -240,7 +240,7 @@ welcome.test <- function(e, ...){
 # Default version.
 #' @importFrom stringr str_detect str_trim
 welcome.default <- function(e, ...){ 
-  swirl_out(s()%N%"اذا سمحت استخدم نفس اسمك المستعار او اختار اسما مستعارا مناسبا اذا كنت مستخدم جديد swirl اهلا بك في", skip_after=TRUE)
+  swirl_out(s()%N%"اذا سمحت استخدم نفس اسمك المستعار او اختار اسما مستعارا مناسبا اذا كنت مستخدم جديد swirl اهلا في", skip_after=TRUE)
   resp <- readline(s()%N%"(>>) اكتب اسمك على الجهه اليمنى بعد اشاره |>> ")
   while(str_detect(resp, '[[:punct:]]') || nchar(str_trim(resp)) < 1) {
     swirl_out(s()%N%"!!أ عند انشاء اسمك اذا سمحت لا تستخدم اي علامات ترقيم او اسماء مستخدمه مسبقا ",
