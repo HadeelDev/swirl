@@ -1,7 +1,7 @@
 .onAttach <- function(...) {
   if(length(ls(envir=globalenv())) > 0) {
     packageStartupMessage(
-      make_pretty(s()%N%"اهلا، انا ارى انك حفظت بعض النتغيرات في مكان عملك ",
+      make_pretty(s()%N%"اهلا بك، لقد حفظت بعض التغييرات في مكان عملك ",
                   s()%N%"لجعل الامور تسير على مايرام ،اقترح عليك ان تمسحها",
                   s()%N%"swirlقبل ان تبدا ", skip_after=TRUE),
       make_pretty(s()%N%"لتشاهد قائمه من المتغيرات في مكان عملك ls() اكتب",
