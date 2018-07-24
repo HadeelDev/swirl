@@ -1,8 +1,6 @@
 swirl_language <- function(){
   lang <- getOption("swirl_لغه")
-  langs <- c("الصينيه", "الهولنديه", "الانجليزيه", 
-             "الفرنسيه", "الالمانيه", "الالمانيه الاصليه", "الكوريه", "البنغاليه", 
-             "الهولنديه", "الصينيه")
+  langs <- c("العربيه","الانجليزيه")
   
   if(is.null(lang) || !(lang %in% langs)){
     "english"
@@ -26,9 +24,7 @@ swirl_language <- function(){
 #' 
 #' @export
 select_language <- function(language = NULL, append_rprofile = FALSE){
-  langs <-  c("الصينيه", "الهولنديه", "الانجليزيه", 
-              "الفرنسيه", "الالمانيه", "الالمانيه الاصليه", "الكوريه", "البنغاليه", 
-              "الهولنديه", "الصينيه")
+  langs <-  c("العربيه","الانجليزيه")
   if(is.null(language)){
     selection <- select.list(langs)
   } else if(!(language %in% langs)){
