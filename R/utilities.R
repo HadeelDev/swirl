@@ -122,7 +122,7 @@ loadDependencies <- function(lesson_dir) {
     packages_as_chars <- setdiff(readLines(depends, warn=FALSE), "")
     # If the dependson file is empty, then proceed with lesson
     if(length(packages_as_chars) == 0) return(TRUE)
-    swirl_out(s()%N%"Attempting to load lesson dependencies...")
+    swirl_out(s()%N%"محاوله تحميل مرفقات الدرس")
     for(p in packages_as_chars) {
       p <- gsub("^\\s+|\\s+$", "", p) # trim leading and trailing whitespace 
       if(suppressPackageStartupMessages(
@@ -130,20 +130,20 @@ loadDependencies <- function(lesson_dir) {
           suppressMessages(require(p, character.only=TRUE, quietly=TRUE))))) {
         swirl_out(s()%N%"Package", sQuote(p), s()%N%"loaded correctly!")
       } else {
-        swirl_out(s()%N%"This lesson requires the", sQuote(p), 
-                  s()%N%"package. Would you like me to install it for you now?")
+        swirl_out(s()%N%"هذا الدرس يحتاج الى حزمه", sQuote(p), 
+                  s()%N%"هل ترغب في ان اقوم بتنزيل هذه الحزمه لك الان؟")
         yn <- select.list(choices=c(s()%N%"Yes", s()%N%"No"), graphics=FALSE)
         if(yn == s()%N%"Yes") {
-          swirl_out(s()%N%"Trying to install package", sQuote(p), s()%N%"now...")
+          swirl_out(s()%N%"جاري محاوله تنزيل الحزمه", sQuote(p), s()%N%"الان")
           install.packages(p, quiet=TRUE)
           if(suppressPackageStartupMessages(
             suppressWarnings(
               suppressMessages(require(p, 
                                        character.only=TRUE, 
                                        quietly=TRUE))))) {
-            swirl_out(s()%N%"Package", sQuote(p), s()%N%"loaded correctly!")
+            swirl_out(s()%N%"الحزمه", sQuote(p), s()%N%"حملت بشكل صحيح")
           } else {
-            swirl_out(s()%N%"Could not install package", paste0(sQuote(p), "!"))
+            swirl_out(s()%N%"لم يتم تحميل الحزمه بشكل صحيح", paste0(sQuote(p), "!"))
             return(FALSE)
           }
         } else {
@@ -175,11 +175,11 @@ complete_part <- function(e) {
       if(file.exists(correct_script_path)) {
         try(source(correct_script_path))
       } else {
-        stop("Correct script not found at ", correct_script_path)
+        stop("البرنامج النصي الصحيح غير موجود في ", correct_script_path)
       }
     }
   }
-  message("Completing the first part of the lesson for you...\n")
+  message("\n اكمال الجزء الاول من الدرس لك")
   apply(les, 1, exec_cmd)
   invisible()
 }
