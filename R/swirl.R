@@ -95,7 +95,7 @@ swirl <- function(resume.class="default", ...){
 #' }
 bye <- function(){
   removeTaskCallback("mini")
-  swirl_out(s()%N%"Leaving swirl now. Type swirl() to resume.", skip_after=TRUE)
+  swirl_out(s()%N%"للبدأ مره اخرى swirl() الان اكتب swirl خرجت من", skip_after=TRUE)
   invisible()
 }
 
@@ -226,13 +226,13 @@ restart <- function(){invisible()}
 #' \code{nxt()}, \code{skip()}, and \code{info()}.
 #' @export
 info <- function(){
-  swirl_out(s()%N%"When you are at the R prompt (>):")
-  swirl_out(s()%N%"-- Typing skip() allows you to skip the current question.", skip_before=FALSE)
-  swirl_out(s()%N%"-- Typing play() lets you experiment with R on your own; swirl will ignore what you do...", skip_before=FALSE)
-  swirl_out(s()%N%"-- UNTIL you type nxt() which will regain swirl's attention.", skip_before=FALSE)
-  swirl_out(s()%N%"-- Typing bye() causes swirl to exit. Your progress will be saved.", skip_before=FALSE)
-  swirl_out(s()%N%"-- Typing main() returns you to swirl's main menu.", skip_before=FALSE)
-  swirl_out(s()%N%"-- Typing info() displays these options again.", skip_before=FALSE, skip_after=TRUE)
+  swirl_out(s()%N%" تستطيع كتابه هذه الاوامر بسرعه  R عندما تكون على ")
+  swirl_out(s()%N%"-- لتجاهل السؤال الحالي >skip() اكتب", skip_before=FALSE)
+  swirl_out(s()%N%"--لوحدك R حتى تستمع بتجربه >play() اكتب", skip_before=FALSE)
+  swirl_out(s()%N%"--مره اخرى swirl للعوده ل >nxt() اكتب", skip_before=FALSE)
+  swirl_out(s()%N%"-- swirl للخروج من >bye() اكتب", skip_before=FALSE)
+  swirl_out(s()%N%"--الرئيسيه swirl للعوده للقائمه >main() اكتب", skip_before=FALSE)
+  swirl_out(s()%N%"-- لظهور هذه الخيارات مره اخرى >info() اكتب", skip_before=FALSE, skip_after=TRUE)
   invisible()
 }
 
@@ -252,7 +252,7 @@ resume.default <- function(e, ...){
   args_specification(e, ...)
   
   esc_flag <- TRUE
-  on.exit(if(esc_flag)swirl_out(s()%N%"Leaving swirl now. Type swirl() to resume.", skip_after=TRUE))
+  on.exit(if(esc_flag)swirl_out(s()%N%"للبدأ مره اخرى swirl() الان اكتب swirl خرجت من", skip_after=TRUE))
   # Trap special functions
   if(uses_func("info")(e$expr)[[1]]){
     esc_flag <- FALSE
@@ -302,7 +302,7 @@ resume.default <- function(e, ...){
         swirl_out(s()%N%"I just sourced the following script, which demonstrates one possible solution.",
                   skip_after=TRUE)
         file.edit(correct_script_path)
-        readline(s()%N%"Press Enter when you are ready to continue...")
+        readline(s()%N%"اذا كنت جاهزا للمتابعه Enter اضغط")
       }
       
     # If this is not a script question...
@@ -324,7 +324,7 @@ resume.default <- function(e, ...){
       ce <- as.list(ce)
       
       # Inform the user and expose the correct answer
-      swirl_out(s()%N%"Entering the following correct answer for you...",
+      swirl_out(s()%N%"ادخال الاجابه الصحيحه التاليه بالنسبه",
                 skip_after=TRUE)
       message("> ", e$current.row[, "CorrectAnswer"])
 
@@ -374,7 +374,7 @@ resume.default <- function(e, ...){
   temp <- mainMenu(e)
   # If menu returns FALSE, the user wants to exit.
   if(is.logical(temp) && !isTRUE(temp)){
-    swirl_out(s()%N%"Leaving swirl now. Type swirl() to resume.", skip_after=TRUE)
+    swirl_out(s()%N%"للبدأ مره اخرى swirl() الان اكتب swirl خرجت من", skip_after=TRUE)
     esc_flag <- FALSE # To supress double notification
     return(FALSE)
   }
@@ -431,12 +431,12 @@ resume.default <- function(e, ...){
       }
       
       # Let user know lesson is complete
-      swirl_out(s()%N%"You've reached the end of this lesson! Returning to the main menu...")
+      swirl_out(s()%N%"لقد وصلت لنهايه الدرس عوده للقائمه الرئيسيه")
       # let the user select another course lesson
       temp <- mainMenu(e)
       # if menu returns FALSE, user wants to quit.
       if(is.logical(temp) && !isTRUE(temp)){
-        swirl_out(s()%N%"Leaving swirl now. Type swirl() to resume.", skip_after=TRUE)
+        swirl_out(s()%N%"للبدأ مره اخرى swirl() الان اكتب swirl خرجت من ", skip_after=TRUE)
         esc_flag <- FALSE # to supress double notification
         return(FALSE)
       }
