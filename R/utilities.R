@@ -64,7 +64,7 @@ safeEval <- function(expr, e){
   temp <- capture.output(
     try(suppressMessages(suppressWarnings(eval(expr,e1))), silent=TRUE)
     )
-  if(is(temp, "خطأ حاول"))return(ans)
+  if(is(temp, "try-error"))return(ans)
   for (x in ls(e1)){
     if(exists(x,globalenv()))
       ans[[x]] <- get(x,globalenv())
@@ -122,28 +122,28 @@ loadDependencies <- function(lesson_dir) {
     packages_as_chars <- setdiff(readLines(depends, warn=FALSE), "")
     # If the dependson file is empty, then proceed with lesson
     if(length(packages_as_chars) == 0) return(TRUE)
-    swirl_out(s()%N%"محاوله تحميل تبعيات الدرس")
+    swirl_out(s()%N%"Attempting to load lesson dependencies...")
     for(p in packages_as_chars) {
       p <- gsub("^\\s+|\\s+$", "", p) # trim leading and trailing whitespace 
       if(suppressPackageStartupMessages(
         suppressWarnings(
           suppressMessages(require(p, character.only=TRUE, quietly=TRUE))))) {
-        swirl_out(s()%N%"باقه", sQuote(p), s()%N%"نزلت بشكل صحيح")
+        swirl_out(s()%N%"Package", sQuote(p), s()%N%"loaded correctly!")
       } else {
-        swirl_out(s()%N%"هذا الدرس يتطلب تحميل باقه", sQuote(p), 
-                  s()%N%"هل ترغب في انني اقوم بتحميل الباقه لك الان؟")
-        yn <- select.list(choices=c(s()%N%"نعم", s()%N%"لا"), graphics=FALSE)
-        if(yn == s()%N%"نعم") {
-          swirl_out(s()%N%"نحاول لانزال الباقه", sQuote(p), s()%N%"now...")
+        swirl_out(s()%N%"This lesson requires the", sQuote(p), 
+                  s()%N%"package. Would you like me to install it for you now?")
+        yn <- select.list(choices=c(s()%N%"Yes", s()%N%"No"), graphics=FALSE)
+        if(yn == s()%N%"Yes") {
+          swirl_out(s()%N%"Trying to install package", sQuote(p), s()%N%"now...")
           install.packages(p, quiet=TRUE)
           if(suppressPackageStartupMessages(
             suppressWarnings(
               suppressMessages(require(p, 
                                        character.only=TRUE, 
                                        quietly=TRUE))))) {
-            swirl_out(s()%N%"الباقه", sQuote(p), s()%N%"نزلت بشكل صحيح")
+            swirl_out(s()%N%"Package", sQuote(p), s()%N%"loaded correctly!")
           } else {
-            swirl_out(s()%N%"لا يمكن تنزيل الباقه", paste0(sQuote(p), "!"))
+            swirl_out(s()%N%"Could not install package", paste0(sQuote(p), "!"))
             return(FALSE)
           }
         } else {
@@ -175,11 +175,11 @@ complete_part <- function(e) {
       if(file.exists(correct_script_path)) {
         try(source(correct_script_path))
       } else {
-        stop("البرنامج النصي الصحيح غير موجود في ", correct_script_path)
+        stop("Correct script not found at ", correct_script_path)
       }
     }
   }
-  message("نكمل لك الجزء الاول من الدرس...\n")
+  message("Completing the first part of the lesson for you...\n")
   apply(les, 1, exec_cmd)
   invisible()
 }

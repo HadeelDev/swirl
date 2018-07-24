@@ -95,7 +95,7 @@ swirl <- function(resume.class="default", ...){
 #' }
 bye <- function(){
   removeTaskCallback("mini")
-  swirl_out(s()%N%"للعوده مره اخرى swirl() الان اكتب  swirl  انت غادرت ", skip_after=TRUE)
+  swirl_out(s()%N%"Leaving swirl now. Type swirl() to resume.", skip_after=TRUE)
   invisible()
 }
 
@@ -226,13 +226,13 @@ restart <- function(){invisible()}
 #' \code{nxt()}, \code{skip()}, and \code{info()}.
 #' @export
 info <- function(){
-  swirl_out(s()%N%" R prompt (>)عندما تكون على ")
-  swirl_out(s()%N%"--  skip() لتجاهل السوال المعطى اكتب", skip_before=FALSE)
-  swirl_out(s()%N%"-- سوف يتجاهل عملكswirl  بنفسك حيث  R سوف تتيح لك تجربه play() اكتب", skip_before=FALSE)
-  swirl_out(s()%N%"-- swirl الذي ستعيده اهتمامات nxt() حتى تكتب", skip_before=FALSE)
-  swirl_out(s()%N%"--ولكن جميع برمجتك سوف تحفظ swirl للخروج من  bye()  اكتب ", skip_before=FALSE)
-  swirl_out(s()%N%"-- swirl للعوده مره اخرى لقائمه main() اكتب", skip_before=FALSE)
-  swirl_out(s()%N%"-- لظهور هذه الخيارات مره اخرى info() اكتب", skip_before=FALSE, skip_after=TRUE)
+  swirl_out(s()%N%"When you are at the R prompt (>):")
+  swirl_out(s()%N%"-- Typing skip() allows you to skip the current question.", skip_before=FALSE)
+  swirl_out(s()%N%"-- Typing play() lets you experiment with R on your own; swirl will ignore what you do...", skip_before=FALSE)
+  swirl_out(s()%N%"-- UNTIL you type nxt() which will regain swirl's attention.", skip_before=FALSE)
+  swirl_out(s()%N%"-- Typing bye() causes swirl to exit. Your progress will be saved.", skip_before=FALSE)
+  swirl_out(s()%N%"-- Typing main() returns you to swirl's main menu.", skip_before=FALSE)
+  swirl_out(s()%N%"-- Typing info() displays these options again.", skip_before=FALSE, skip_after=TRUE)
   invisible()
 }
 
@@ -252,7 +252,7 @@ resume.default <- function(e, ...){
   args_specification(e, ...)
   
   esc_flag <- TRUE
-  on.exit(if(esc_flag)swirl_out(s()%N%" للعوده swirl() الان اكتب  swirl خرجت من  ", skip_after=TRUE))
+  on.exit(if(esc_flag)swirl_out(s()%N%"Leaving swirl now. Type swirl() to resume.", skip_after=TRUE))
   # Trap special functions
   if(uses_func("info")(e$expr)[[1]]){
     esc_flag <- FALSE
@@ -285,7 +285,7 @@ resume.default <- function(e, ...){
     e$skipped <- TRUE
     # Enter the correct answer for the user
     # by simulating what the user should have done
-    correctAns <- e$current.row[,"اجابه صحيحه"]
+    correctAns <- e$current.row[,"CorrectAnswer"]
     
     # If we are on a script question, the correct answer should
     # simply source the correct script
@@ -299,10 +299,10 @@ resume.default <- function(e, ...){
         # Source the correct script
         try(source(correct_script_path))
         # Inform the user and open the correct script
-        swirl_out(s()%N%"سوف افتح لك البرنامج النصي الصحيح ",
+        swirl_out(s()%N%"I just sourced the following script, which demonstrates one possible solution.",
                   skip_after=TRUE)
         file.edit(correct_script_path)
-        readline(s()%N%"اضغط على زر المتابعه اذا كنت مستعدا للاستمرار")
+        readline(s()%N%"Press Enter when you are ready to continue...")
       }
       
     # If this is not a script question...
@@ -324,9 +324,9 @@ resume.default <- function(e, ...){
       ce <- as.list(ce)
       
       # Inform the user and expose the correct answer
-      swirl_out(s()%N%"ادخال الاجابه الصحيحه التاليه بالنسبه لك",
+      swirl_out(s()%N%"Entering the following correct answer for you...",
                 skip_after=TRUE)
-      message("> ", e$current.row[, "اجابه صحيحه"])
+      message("> ", e$current.row[, "CorrectAnswer"])
 
       if(e$vis & !is.null(e$val)) {
         print(e$val)
@@ -358,11 +358,11 @@ resume.default <- function(e, ...){
   if(uses_func("help")(e$expr)[[1]] || 
        uses_func("`?`")(e$expr)[[1]]){
     # Get current correct answer
-    corrans <- e$current.row[, "اجابه صحيحه"]
+    corrans <- e$current.row[, "CorrectAnswer"]
     # Parse the correct answer
     corrans_parsed <- parse(text = corrans)
     # See if it contains ? or help
-    uses_help <- uses_func("مساعده")(corrans_parsed)[[1]] ||
+    uses_help <- uses_func("help")(corrans_parsed)[[1]] ||
       uses_func("`?`")(corrans_parsed)[[1]]
     if(!uses_help) {
       esc_flag <- FALSE
@@ -374,7 +374,7 @@ resume.default <- function(e, ...){
   temp <- mainMenu(e)
   # If menu returns FALSE, the user wants to exit.
   if(is.logical(temp) && !isTRUE(temp)){
-    swirl_out(s()%N%"للعوده swirl() الان اكتب  swirl خرجت  من", skip_after=TRUE)
+    swirl_out(s()%N%"Leaving swirl now. Type swirl() to resume.", skip_after=TRUE)
     esc_flag <- FALSE # To supress double notification
     return(FALSE)
   }
@@ -431,12 +431,12 @@ resume.default <- function(e, ...){
       }
       
       # Let user know lesson is complete
-      swirl_out(s()%N%"لقد اكملت الدرس ،عوده للقائمه الرئيسيه")
+      swirl_out(s()%N%"You've reached the end of this lesson! Returning to the main menu...")
       # let the user select another course lesson
       temp <- mainMenu(e)
       # if menu returns FALSE, user wants to quit.
       if(is.logical(temp) && !isTRUE(temp)){
-        swirl_out(s()%N%"للعوده swirl() الان اكتب  swirl خرجت م", skip_after=TRUE)
+        swirl_out(s()%N%"Leaving swirl now. Type swirl() to resume.", skip_after=TRUE)
         esc_flag <- FALSE # to supress double notification
         return(FALSE)
       }

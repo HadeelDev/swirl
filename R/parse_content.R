@@ -29,13 +29,13 @@ parse_content.rmd <- function(file, e) {
 }
 
 wrap_encoding <- function(raw_yaml) {
-  if (class(raw_yaml) == "قائمه") {
+  if (class(raw_yaml) == "list") {
     retval <- lapply(raw_yaml, wrap_encoding)
     attributes(retval) <- attributes(raw_yaml)
     retval
   } else {
-    if (class(raw_yaml) == "حرف") {
-      if (Encoding(raw_yaml) == "غير معرف") {
+    if (class(raw_yaml) == "character") {
+      if (Encoding(raw_yaml) == "unknown") {
         Encoding(raw_yaml) <- "UTF-8"
       }
     }
