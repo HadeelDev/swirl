@@ -79,7 +79,7 @@ rmatch_calls <- function(expr, eval_for_class=FALSE, eval_env=NULL){
   # would be likely to give a misleading result. Catch the error merely to
   # produce a better diagnostic.
   tryCatch(fct <- match.fun(expr[[1]]),
-           error=function(e)stop(paste0("Illegal expression ", dprs(expr), 
+           error=function(e)stop(paste0("عباره غير قانونيه ", dprs(expr), 
                                         ": ", dprs(expr[[1]]), " is not a function.\n")))
   # If fct is a special function such as `$`, or builtin such as `+`, return expr.
   if(is.primitive(fct)){
@@ -88,14 +88,14 @@ rmatch_calls <- function(expr, eval_for_class=FALSE, eval_env=NULL){
   # If fct is an (S4) standardGeneric, match.call is likely to give a misleading result,
   # so raise an exception. (Note that builtins were handled earlier.)
   if(is(fct, "standardGeneric")){
-    stop(paste0("Illegal expression, ", dprs(expr), ": ", dprs(expr[[1]]), " is a standardGeneric.\n"))
+    stop(paste0("عباره غير قانونيه, ", dprs(expr), ": ", dprs(expr[[1]]), " is a standardGeneric.\n"))
   }
   # At this point, fct should be an ordinary function or an S3 method.
   if(isS3(fct)){
     # If the S3 method's first argument, expr[[2]], is anything but atomic 
     # its class can't be determined here without evaluation.
     if(!is.atomic(expr[[2]]) & !eval_for_class){
-      stop(paste0("Illegal expression, ", dprs(expr),": The first argument, ", dprs(expr[[2]]), 
+      stop(paste0("عباره غير قانونيه, ", dprs(expr),": The first argument, ", dprs(expr[[2]]), 
                   ", to S3 method '", dprs(expr[[1]]), 
                   "', is a ", class(expr[[2]]) , ", which (as an expression) is not atomic,",
                   " hence its class can't be determined in an abstract",
@@ -117,7 +117,7 @@ rmatch_calls <- function(expr, eval_for_class=FALSE, eval_env=NULL){
     # raise an error
     if(is(err, "try-error")){
       tryCatch(fct <- getS3method(as.character(expr[[1]]), "default"),
-               error = function(e)stop(paste0("Illegal expression ", dprs(expr), ": ",
+               error = function(e)stop(paste0("عباره غير قانونيه ", dprs(expr), ": ",
                                               "There is no matching S3 method or default for object, ",
                                               dprs(expr[[2]]), ", of class, ", cls,".\n")))
     }
@@ -125,7 +125,7 @@ rmatch_calls <- function(expr, eval_for_class=FALSE, eval_env=NULL){
   # Form preliminary match. If match.call raises an error here, the remaining code is
   # likely to give a misleading result. Catch the error merely to give a better diagnostic.
   tryCatch(expr <- match.call(fct, expr),
-           error = function(e)stop(paste0("Illegal expression ", dprs(expr), ": ", 
+           error = function(e)stop(paste0("عباره غير قانونيه", dprs(expr), ": ", 
                                           dprs(expr[[1]]), " is not a function.\n")))
   # Append named formals with default values which are not included
   # in the preliminary match
