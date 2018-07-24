@@ -35,11 +35,7 @@ do_submit.default <- function(e) {
 }
 
 do_play.default <- function(e) {
-<<<<<<< HEAD
-  swirl_out(s()%N%"الان سوف ندخل ساحه اللعب، انقر على زر المتابعه اذا كنت مستعدا لاستئناف الدرس", skip_after=TRUE)
-=======
   swirl_out(s()%N%"Entering play mode. Experiment as you please, then type nxt() when you are ready to resume the lesson.", skip_after=TRUE)
->>>>>>> parent of 977ef35... translate4
   e$playing <- TRUE
 }
 
