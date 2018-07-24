@@ -25,9 +25,9 @@ courseraCheck <- function(e){
   while(!ok) {
     # Get submission credentials
     r <- getCreds(e)
-    email <- r["ايميل"]
-    passwd <- r["كلمه المرور"]
-    course_name <- r["اسم الكورس"]
+    email <- r["email"]
+    passwd <- r["passwd"]
+    course_name <- r["courseid"]
     output <- paste0(ss[[1]], substr(e$coursera, 1, 16), ss[[2]],
                      collapse="")
     # Name output file

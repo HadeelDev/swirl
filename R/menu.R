@@ -240,7 +240,8 @@ welcome.test <- function(e, ...){
 # Default version.
 #' @importFrom stringr str_detect str_trim
 welcome.default <- function(e, ...){ 
-  swirl_out(s()%N%"اذا سمحت استخدم نفس اسمك المستعار او اختار اسما مستعارا مناسبا اذا كنت مستخدم جديد swirl اهلا في", skip_after=TRUE)
+  swirl_out(s()%N%"\n اما اذا كنت ضيفا جديدا فتخار لنفسك اسما مميزا \n استخدم اسمك المستعار \n swirl() اهلا بك صديقي في ",skip_after=TRUE)
+  
   resp <- readline(s()%N%"(>>) اكتب اسمك على الجهه اليمنى بعد اشاره |>> ")
   while(str_detect(resp, '[[:punct:]]') || nchar(str_trim(resp)) < 1) {
     swirl_out(s()%N%"!!أ عند انشاء اسمك اذا سمحت لا تستخدم اي علامات ترقيم او اسماء مستخدمه مسبقا ",
@@ -255,13 +256,17 @@ welcome.default <- function(e, ...){
 # @param e persistent environment used here only for its class attribute
 # 
 housekeeping.default <- function(e){
-  swirl_out(paste0(s()%N%"شكرا لك  ", e$usr, s()%N%". احضر قهوتك المفضله حتى نستعد سويا لدرس ،الان سوف ننتبه لكل اشاره صغيره ،اذا كنت تريد الاستمرار اضغط على زر المتابعه"))
+  swirl_out(paste0(s()%N%"شكرا لك  ", e$usr, s()%N%" اذا سمحت احضر قهوتك المفضله حتى نستعد سويا لدرس ",
+                   s()%N%"صديقي لابد ان  نحاول اننا نعدل وننتبه  لكل التفاصيل الصغيره ",
+                   s()%N%"عشان نتعلم "))
   readline(s()%N%"\n...  <-- هذه اشاره منك لاستمرار")
  
   swirl_out(s()%N%"عندما تسأل لختار من القائمه فيتوجب عليك الاختار ثم الضغط على رز الانتر  حتي تستطيع الاستمرار")
   select.list(c(s()%N%"الاستمرار", s()%N%"البرمجه", s()%N%"لنستمر"),
               title=s()%N%"\n  اختار احد هذه الارقام1  2  3  ثم اضغط زر المتابعه ", graphics=FALSE)
-  swirl_out(s()%N%"bye بالضغط على زر الهروب او كتابه كلمه swirl تستطيع الخروج من ")
+  swirl_out( s()%N%"\n swirl بعد ذلك سوف تشاهد رساله تخبرك بأنك غادرت ",
+             s()%N%"\n bye بالضغط على زر الهروب او كتابه كلمه swirl تستطيع الخروج من ")
+  
   info()
   swirl_out(s()%N%"هيا نبدا", skip_before=FALSE)
   readline("\n...")
