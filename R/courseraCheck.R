@@ -61,7 +61,7 @@ courseraCheck <- function(e){
                     s()%N%"لا تتجاهل اكثر من سؤال في المره القادمه")
           return()
         }
-        if(!is(results, "حاول ،خطأ")){
+        if(!is(results, "try-error")){
           # TODO: It would be best to detect success here, rather than
           # failure, but as of Feb 23 2014, submit.url may not throw
           # an error indicating failure but instead return an HTML
@@ -217,7 +217,7 @@ submitSolution <- function(email, submit.url, ch.resp, sid, output,
                  state = signature)
   params <- lapply(params, URLencode)
   result <- try(postForm(submit.url, .params = params), silent=TRUE)
-  if(is(result,"حاول ، خطأ")){
+  if(is(result,"try-error")){
     return(result)
   } else {
     s <- strsplit(result, "\\r\\n")[[1]]
