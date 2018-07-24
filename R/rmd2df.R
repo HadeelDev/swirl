@@ -14,7 +14,7 @@ get_corr_ans.cmd_question <- function(unit) {
   end_chunk <- grep("^```$", unit)
   
   if(length(beg_chunk) == 0 | length(end_chunk) == 0) {
-    stop("You forgot to specify the correct answer on a command question!")
+    stop("لقد نسيت ان تحدد الاجابه الصحيحه في سؤال الكود")
   }
   
   # Capture everything in between (exclusive)
@@ -22,7 +22,7 @@ get_corr_ans.cmd_question <- function(unit) {
   
   # Check for comments
   if(any(grepl("#", corr_ans))) {
-    stop("No comments allowed in correct answer!")
+    stop("لا تعليقات متاحه اذا كانت الاجابه صحيحه")
   }
   # Return correct answer
   corr_ans
@@ -31,7 +31,7 @@ get_corr_ans.cmd_question <- function(unit) {
 get_corr_ans.mult_question <- function(unit) {
   corr_ans_ind <- grep("^_[1-9][.].+_$", unit)
   if(length(corr_ans_ind) == 0) {
-    stop("You forgot to specify the correct answer on a multiple choice question!")
+    stop("لقد نسيت ان تحدد الاجابه الصحيحه في سؤال متعدد الخيارات")
   }
   gsub("^_[1-9][.]\\s|_$", "", unit[corr_ans_ind])
 }
@@ -48,7 +48,7 @@ get_ans_choices.mult_question <- function(unit) {
   # Find answer choices
   choice_ind <- grep("^_?[1-9][.]", unit)
   if(length(choice_ind) == 0) {
-    stop("You forgot to specify answer choices!")
+    stop("لقد نسيت ان تحدد خيارات الاجابه")
   }
   # Collapse answer choices
   collapse_choices(unit[choice_ind])
@@ -85,13 +85,13 @@ get_hint.default <- function(unit) {
 
 get_hint.cmd_question <- function(unit) {
   hint_ind <- grep("*** .hint", unit, fixed = TRUE) + 1
-  if(length(hint_ind) == 0) stop("You forgot to specify a hint!")
+  if(length(hint_ind) == 0) stop("لقد نسيت ان تحدد المساعده")
   hint <- unit[hint_ind]
 }
 
 get_hint.mult_question <- function(unit) {
   hint_ind <- grep("*** .hint", unit, fixed = TRUE) + 1
-  if(length(hint_ind) == 0) stop("You forgot to specify a hint!")
+  if(length(hint_ind) == 0) stop("لقد نسيت ان تحدد المساعده")
   hint <- unit[hint_ind]
 }
 
@@ -105,7 +105,7 @@ get_fig_filename.default <- function(unit) {
 
 get_fig_filename.figure <- function(unit) {
   fig_ind <- grep("*** .figure", unit, fixed = TRUE) + 1
-  if(length(fig_ind) == 0) stop("You forgot to specify a figure filename!")
+  if(length(fig_ind) == 0) stop("لقد نسيت ان تحدد اسم ملف الصوره")
   fig <- unit[fig_ind]
 }
 
@@ -117,7 +117,7 @@ get_fig_type.default <- function(unit) {
 
 get_fig_type.figure <- function(unit) {
   figtype_ind <- grep("*** .fig_type", unit, fixed = TRUE) + 1
-  if(length(figtype_ind) == 0) stop("You forgot to specify a figure type!")
+  if(length(figtype_ind) == 0) stop("لقد نسيت ان تحدد نوع الرسمه")
   figtype <- unit[figtype_ind]
 }
 
