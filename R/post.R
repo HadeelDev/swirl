@@ -11,9 +11,9 @@ post_init.default <- function(e) {
 
 post_exercise.default <- function(e, current.row) {
   # Suppress extra space if multiple choice
-  is_mult <- is(e$current.row, "mult_question")
+  is_mult <- is(e$current.row, "اسئله مختلفه")
   # Present output to user
-  swirl_out(current.row[, "Output"], skip_after = !is_mult)
+  swirl_out(current.row[, "المخرجات"], skip_after = !is_mult)
 }
 
 post_mult_question.default <- function(e, choices) {
@@ -26,7 +26,7 @@ post_result.default <- function(e, passed, feedback, hint) {
     # If hint is specified, print it. Otherwise, just skip a line.
     if(!is.null(hint)) {
       # Suppress extra space if multiple choice
-      is_mult <- is(e$current.row, "mult_question")
+      is_mult <- is(e$current.row, "اسئله مختلفه")
       swirl_out(hint, skip_after = !is_mult) 
     } else {
       message()
@@ -40,5 +40,5 @@ post_progress.default <- function(e) {
 }
 
 post_finished.default <- function(e) {
-  swirl_out(s()%N%"Lesson complete! Exiting swirl now...", skip_after=TRUE)
+  swirl_out(s()%N%"الان swirl انتهي الدرس خروج من ", skip_after=TRUE)
 }
