@@ -11,14 +11,14 @@ courseraCheck <- function(e){
 
   tt <- c(rep(letters, 3), seq(100))
   swirl_out(s()%N%"المرتبطه بهذا الدرس؟ Coursera هل انت حاليا مسجل في دوره")
-  yn <- select.list(c("No","Yes"), graphics=FALSE)
+  yn <- select.list(c("Yes","No"), graphics=FALSE)
   if(yn=="No")return()
   ss <- lapply(1:2, function(i) {
     paste0(sample(tt, sample(seq(400), 1), replace=TRUE), collapse="")
   })
   swirl_out(s()%N%"انك قد اكملت الدرس؟ Coursera هل تريد مني ان ابلغ كورس",
             "اذا نعم، سوف اخذ منك مزيدا من المعلومات ")
-  choice <- select.list(c("No","Yes","Maybe later"), graphics=FALSE)
+  choice <- select.list(c("Yes","No","Maybe later"), graphics=FALSE)
   if(choice=="No") return()
   # Begin submission loop
   ok <- FALSE
@@ -94,11 +94,11 @@ courseraCheck <- function(e){
       }
     } # end of yes branch
   } # end of while loop
-  swirl_out(s()%N%"انك قد اكملت الدرس Coursera لاعلام",
+  swirl_out(s()%N%"انك قد اكملت الدرس Coursera حتى اقم بأبلاغ",
             s()%N%"يرجى التحميل", sQuote(output_filename),
-            s()%N%"يدويا قد يتوجب عليك زياره البرمجه Coursera لتفعيل  ",
-            s()%N%"صفحه الواجبات على موقع الدوره الخاصه بك وايضا رابط تسليم الواجبات",
-            s()%N%" swirlرز بجانب درس ",
+            s()%N%" يدويا،او من الممكن ان تقوم بزياره Coursera ل ",
+            s()%N%"صفحه الواجبات على موقع الدوره الخاصه بك  ثم اضغط على زر التسليم ",
+            s()%N%" swirl بجانب الدرس المناسب ل",
             s()%N%":قمت بوضع الملف في المكان التالي",
             skip_after=TRUE)
   message(getwd(), "\n")
@@ -108,16 +108,16 @@ courseraCheck <- function(e){
 # Returns TRUE if user would like to retry, FALSE if not
 retry <- function() {
   swirl_out(s()%N%"هل تريد اعاده المحاوله التلقائيه او ارسالها يدويا؟")
-  ans <- select.list(c("تسليم يدوي", "اعاده المحاوله التلقائيه"), graphics=FALSE)
+  ans <- select.list(c("Retry automatic submission", "Submit manually"), graphics=FALSE)
   # Return TRUE if user would like to retry
-  return(ans == "اعاده المحاوله التلقائيه")
+  return(ans == "Retry automatic submission")
 }
 
 get_courseid <- function() {
   swirl_out(s()%N%"البند الاول الذي احتاجه هو معرفه الدوره التدريبه الخاصه بك، على سبيل المثال :لو",
-            s()%N%"الخاصه بك كانت Coursera صفحه كورس",
+            s()%N%"هو Coursera كان الموقع الالكتروني التابع لدوره ",
             s()%N%"'https://class.coursera.org/rprog-001',",
-            s()%N%"اذن سوف يكون رقم الدوره الخاصه بك هو 'rprog-001' (without the quotes).",
+            s()%N%" 'rprog-001' (without the quotes)اذن سوف يكون رقم الكورس الخاص بك هو ",
             skip_after=TRUE)
   repeat {
     courseid <- readline(":رقم الدوره")
@@ -152,16 +152,16 @@ get_courseid <- function() {
     swirl_out(s()%N%" Coursera  انا اريد رقم الدوره التي كانت في اخر جزء من عنوان دوره",
               s()%N%" الخاصه بك هي  Coursera  على سبيل المثال اذا كانت الصفحه الرئيسيه لدوره",
               s()%N%"'https://class.coursera.org/rprog-001',",
-              s()%N%"اذن سوف يكون رقم الدوره الخاصه بك هي'rprog-001' (without the quotes).",
+              s()%N%"'rprog-001' (without the quotes) اذن سوف يكون رقم الدوره الخاصه بك هي",
               skip_after=TRUE)
   }
   courseid
 }
 
 getCreds <- function(e) {
-  cn <- make_pathname(attr(e$les, "اسم الدوره"))
+  cn <- make_pathname(attr(e$les, "course_name"))
   credfile <- file.path(e$udat, paste0(cn, ".txt"))
-  e$coursera <- digest(paste0("اكمل", paste0(
+  e$coursera <- digest(paste0("complete", paste0(
     rep("_", ifelse(is.null(e$skips), 0, e$skips)), collapse="")),
     algo="sha1", serialize = FALSE)
   
@@ -170,8 +170,8 @@ getCreds <- function(e) {
   while(!confirmed) {
     if(!file.exists(credfile) || need2fix) {
       courseid <- get_courseid()
-      email <- readline(":ادخل الايميل ")
-      passwd <- readline(":ادخل كلمه المرر ")
+      email <- readline("Submission login (email):")
+      passwd <- readline("Submission password: ")
       writeLines(c(courseid, email, passwd), credfile)
       r <- c(courseid = courseid, email = email, passwd = passwd)
     } else {
