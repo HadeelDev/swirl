@@ -432,12 +432,12 @@ expr_creates_var <- function(correctName=NULL){
   if(is.null(correctName)){
     results <- expectThat(length(delta), equals_legacy(1), 
                           label=paste(deparse(e$expr), 
-                                      "does not create a variable."))  
+                                      "لا  يستطيع ان ينشأ متغير"))  
   } else {
     results <- expectThat(names(delta), 
                           is_equivalent_to_legacy(correctName, label=correctName), 
                           label=paste(deparse(e$expr),
-                                      "does not create a variable named",
+                                      "لا يستطيع ان ينشأ اسم متغير",
                                       correctName))
   }
   if(results$passed){
@@ -468,7 +468,7 @@ val_has_length <- function(len){
   try(n <- as.integer(len), silent=TRUE)
   if(is.na(n)){
     stop(message=paste("BUG: specified length", len,
-                                 "is not an integer."))
+                                 "ليس عدد صحيح"))
   }
   results <- expectThat(length(e$val), equals_legacy(n, label=n), 
                         label=paste0("length(c(", toString(e$val), "))"))                                                   
