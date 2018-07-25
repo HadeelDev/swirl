@@ -75,7 +75,7 @@ install_course <- function(course_name = NULL, swc_path = NULL, force = FALSE){
       swirl_out(s()%N%"يبدو ان هناك مشكله في اتصال الانترنت ، الشبكه لا تعمل",
                 s()%N%"الذي يتوافق مع الدوره التدريبيه التي ترغب في تثبيتها swc  وقم بانزال ملف http://swirlstats.com/scn/ اذهب الى",
                 s()%N%" ثم اختار الملف الذي تود تنزيله install_course() قم بتشغيل swc بعد تنزيل ")
-      stop(s()%N%"Cقد لا يمكن الاتصال بملف الدوره التدريبيه")
+      stop(s()%N%"قد لا يمكن الاتصال في ملف الدورات التدريبيه")
     }
     
     temp_swc <- tempfile()
@@ -173,8 +173,8 @@ install_from_swirl <- function(course_name, dev = FALSE, mirror = "github"){
   
   # Check if course exists
   if(length(unzip_list) == 0) {
-    stop(paste0(s()%N%"Course '", course_name, s()%N%"' not found in course repository! ",
-                s()%N%"Make sure you've got the name exactly right, then try again."))
+    stop(paste0(s()%N%"الدوره", course_name, s()%N%"غير موجوده في قائمه الدورات",
+                s()%N%"تأكد من انك ادخلت الاسم صحيح ثم حاول مره اخرى"))
   }
   
   # Extract
@@ -184,9 +184,9 @@ install_from_swirl <- function(course_name, dev = FALSE, mirror = "github"){
   top_dir <- file.path(swirl_courses_dir(), sort(dirname(unzip_list))[1])
   dirs_to_copy <- list.files(top_dir, full.names=TRUE)
   if(file.copy(dirs_to_copy, swirl_courses_dir(), recursive=TRUE)){
-    swirl_out(s()%N%"Course installed successfully!", skip_after=TRUE)
+    swirl_out(s()%N%"تم تنزيل الدوره بنجاح", skip_after=TRUE)
   } else {
-    swirl_out(s()%N%"Course installation failed.", skip_after=TRUE)
+    swirl_out(s()%N%"فشل في تنزيل الدوره", skip_after=TRUE)
   }
   
   # Delete unzipped directory
@@ -303,7 +303,7 @@ uninstall_all_courses <- function(force = FALSE){
     if(!force){
       swirl_out(s()%N%" swirl هل انت متأكد انك ترغب في حذف جميع دورات ",
                 s()%N%"بشكل مباشر swirl هذا سوف يحذف جميع المرفقات الخاصه بك على دوره ")
-      selection <- select.list(c(s()%N%"نعم", s()%N%"لا"))
+      selection <- select.list(c(s()%N%"Yes", s()%N%"No"))
       if(selection == s()%N%"Yes"){
         unlink(path, recursive=TRUE, force=TRUE)
         message(s()%N%"كل الدورات حذفت بشكل ناجح")
