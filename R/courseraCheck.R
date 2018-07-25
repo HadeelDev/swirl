@@ -11,23 +11,23 @@ courseraCheck <- function(e){
 
   tt <- c(rep(letters, 3), seq(100))
   swirl_out(s()%N%"المرتبطه بهذا الدرس؟ Coursera هل انت حاليا مسجل في دوره")
-  yn <- select.list(c("نعم","لا"), graphics=FALSE)
-  if(yn=="لا")return()
+  yn <- select.list(c("No","Yes"), graphics=FALSE)
+  if(yn=="No")return()
   ss <- lapply(1:2, function(i) {
     paste0(sample(tt, sample(seq(400), 1), replace=TRUE), collapse="")
   })
   swirl_out(s()%N%"انك قد اكملت الدرس؟ Coursera هل تريد مني ان ابلغ كورس",
             "اذا نعم، سوف اخذ منك مزيدا من المعلومات ")
-  choice <- select.list(c("احتمال لاحقا","لا","نعم"), graphics=FALSE)
-  if(choice=="لا") return()
+  choice <- select.list(c("No","Yes","Maybe later"), graphics=FALSE)
+  if(choice=="No") return()
   # Begin submission loop
   ok <- FALSE
   while(!ok) {
     # Get submission credentials
     r <- getCreds(e)
-    email <- r["ايميل"]
-    passwd <- r["كلمه المرور"]
-    course_name <- r["اسم الكورس"]
+    email <- r["email"]
+    passwd <- r["passwd"]
+    course_name <- r["courseid"]
     output <- paste0(ss[[1]], substr(e$coursera, 1, 16), ss[[2]],
                      collapse="")
     # Name output file
@@ -35,9 +35,9 @@ courseraCheck <- function(e){
     # Write output to text file
     writeLines(output, output_filename)
     # If going straight to manual submission, then exit loop.
-    if(choice=="احتمال لاحقا") ok <- TRUE
+    if(choice=="Maybe later") ok <- TRUE
     # If doing automatic submission, then give it a try.
-    if(choice=="نعم"){
+    if(choice=="Yes"){
       swirl_out(s()%N%"انك قد اكملت الدرس الان Coursera سوف احاول الان ان ابلغ كورس")
       challenge.url <- paste(baseurl, course_name,
                              "assignment/challenge", sep = "/")
@@ -71,7 +71,7 @@ courseraCheck <- function(e){
           # be course dependent, so some standard handshake will have
           # to be set up eventually.
           swirl_out(results)
-          if(!str_detect(results, "[Ee]توقع")){
+          if(!str_detect(results, "[Ee]expected")){
             swirl_out(paste0(s()%N%"بانك قد اكملت الدرس Coursera لقد اخبرت ",
                              course_name, ", ", lesson_name,"."))
             # Remove manual submission text file
