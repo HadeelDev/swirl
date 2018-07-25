@@ -27,24 +27,24 @@ waitUser.default <- function(current.row, e){
 }
 
 waitUser.text_question <- function(current.row, e){
-  e$val <- str_trim(unlist(strsplit(readline(":الاجابه "),",")))
+  e$val <- str_trim(unlist(strsplit(readline("ANSWER:"),",")))
   e$iptr <- 1 + e$iptr
 }
 
 waitUser.text_many_question <- function(current.row, e){
-  e$val <- str_trim(unlist(strsplit(readline(":الاجابه "),",")))
+  e$val <- str_trim(unlist(strsplit(readline("ANSWER:"),",")))
   e$iptr <- 1 + e$iptr
 }
 
 waitUser.text_order_question <- function(current.row, e){
-  e$val <- str_trim(unlist(strsplit(readline(":الاجابه "),",")))
+  e$val <- str_trim(unlist(strsplit(readline("ANSWER: "),",")))
   e$iptr <- 1 + e$iptr
 }
 
 
 waitUser.video <- function(current.row, e){
-  response <- readline("نعم او لا ؟ ")
-  if(tolower(response) %in% c("نعم", "ن")){
+  response <- readline("Yes or No ")
+  if(tolower(response) %in% c("y", "yes")){
     swirl_out(s()%N%"للمتابعه nxt() اضغط على")
     e$prompt <- TRUE
     e$playing <- TRUE
@@ -164,7 +164,7 @@ testResponse.default <- function(current.row, e){
   if(is.na(tests) || tests == ""){
     results <- is(e, "dev")
     if(!results){
-      stop(s()%N%"BUG: لا يوجد اختبار لهذا السؤال")
+      stop(s()%N%"BUG: There are no tests for this question!")
     }
   } else {
     tests <- str_trim(unlist(strsplit(tests,";")))
@@ -207,9 +207,9 @@ testResponse.default <- function(current.row, e){
 
 testMe <- function(keyphrase, e){
   # patch to accommodate old-style tests
-  oldcourse <- attr(e$les, "اسم الدوره") %in%
-    c("تحليل الرياضي", "التحليل الرياضي الاحصائي",
-      "فتح المقدمه")
+  oldcourse <- attr(e$les, "course_name") %in%
+    c("Data Analysis", "Mathematical Biostatistics Boot Camp",
+         "Open Intro")
 
   if(oldcourse){
     # Use old test syntax
