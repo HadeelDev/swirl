@@ -9,7 +9,7 @@ args_specification.test <- function(e, ...) {
   targs <- list(...)
   # Check if appropriately named args exist
   if(is.null(targs$test_course) || is.null(targs$test_lesson)) {
-    stop(s()%N%"Must specify 'test_course' and 'test_lesson' to run in 'test' mode!")
+    stop(s()%N%" 'test_course' و'test_lesson' يجب عليك ان تحدد 'test'mode حتى تعمل علي ")
   } else {
     # Make available for use in menu functions
     e$test_lesson <- targs$test_lesson
@@ -18,7 +18,7 @@ args_specification.test <- function(e, ...) {
   # Check that 'from' is less than 'to' if they are both provided
   if(!is.null(targs$from) && !is.null(targs$to)) {
     if(targs$from >= targs$to) {
-      stop(s()%N%"Argument 'to' must be strictly greater than argument 'from'!")
+      stop(s()%N%" 'from'يجب ان تكون اكبر بشكل كبير من الحجه  'to' الحجه")
     }
   }
   if(is.null(targs$from)) {
