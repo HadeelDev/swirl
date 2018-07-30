@@ -131,7 +131,7 @@ get_video_url.default <- function(unit) {
 
 get_video_url.video <- function(unit) {
   vid_ind <- grep("*** .video_url", unit, fixed = TRUE) + 1
-  if(length(vid_ind) == 0) stop("You forgot to specify a video URL!")
+  if(length(vid_ind) == 0) stop("URL لقد نسيت ان تحدد فيديو الخاص ")
   vid <- unit[vid_ind]
 }
 

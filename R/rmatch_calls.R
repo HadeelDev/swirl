@@ -126,7 +126,7 @@ rmatch_calls <- function(expr, eval_for_class=FALSE, eval_env=NULL){
   # likely to give a misleading result. Catch the error merely to give a better diagnostic.
   tryCatch(expr <- match.call(fct, expr),
            error = function(e)stop(paste0("عباره غير قانونيه", dprs(expr), ": ", 
-                                          dprs(expr[[1]]), " is not a function.\n")))
+                                          dprs(expr[[1]]), "\n .ليست داله")))
   # Append named formals with default values which are not included
   # in the preliminary match
   fmls <- formals(fct)
